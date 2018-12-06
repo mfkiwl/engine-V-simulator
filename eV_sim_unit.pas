@@ -135,8 +135,11 @@ begin
   MC.LoadRAM(fn);
   MC.ram_top := $7FFF;
 
-  fn := fp + '\references\I-'+Edit1.Text+'-01'+'.reference_output';
-  ref.Lines.LoadFromFile(fn);
+  if fileExists(fp + '\references\I-'+Edit1.Text+'-01'+'.reference_output') then
+  begin
+    fn := fp + '\references\I-'+Edit1.Text+'-01'+'.reference_output';
+    ref.Lines.LoadFromFile(fn);
+  end;
 
   //Label1.Caption :=Inttostr(MC.RAM_Loaded_Size );
 
@@ -179,7 +182,7 @@ begin
         MC.running := false;
         check_signature;
       end;
-
+(*
       if (mc.PC = $1368) then
       begin
         l.Lines.Add('>>>>');
@@ -187,7 +190,7 @@ begin
         MC.running := false;
         check_signature;
       end;
-
+*)
 
 
     if MC.iss_debug  then
@@ -601,8 +604,8 @@ begin
   repeat
 
     iw := MC.get_ram_word(MC.PC);
-
-//    l.Lines.Add(      inttohex(MC.PC,4) + ':'+      inttohex(iw, 8)+' '+      MC.disasm_at(mc.PC));
+    if cbList.Checked then
+      l.Lines.Add(      inttohex(MC.PC,4) + ':'+      inttohex(iw, 8)+' '+      MC.disasm_at(mc.PC));
 
     MC.sim_step;
     instructions := instructions + 1;

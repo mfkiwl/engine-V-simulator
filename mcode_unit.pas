@@ -1,4 +1,4 @@
-unit mcode_unit;
+suunit mcode_unit;
 
 interface
 
